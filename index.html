@@ -54,50 +54,44 @@
             "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=7934a4fdec7d43b4b539fa21aa4592e3",
             results => {
               let articles = results.articles;
+              let toAdd = [];
               for (let i = 0; i <= articles.length - 1; i++) {
-                if (articles[i].title !== undefined) {
-                  this.state.titles.push(articles[i].title);
-                }
-                if (articles[i].author !== undefined) {
-                  this.state.authors.push(articles[i].author);
-                }
-                if (articles[i].description !== undefined) {
-                  this.state.descriptions.push(articles[i].description);
-                }
-                if (articles[i].url !== undefined) {
-                  this.state.links.push(articles[i].url);
-                }
-                if (articles[i].urlToImage !== undefined) {
-                  this.state.images.push(articles[i].urlToImage);
-                }
+                toAdd.push(articles[i].title);
+
+                // if (articles[i].title !== undefined) {
+                //   this.state.titles.push(articles[i].title);
+                // }
+                // if (articles[i].author !== undefined) {
+                //   this.state.authors.push(articles[i].author);
+                // }
+                // if (articles[i].description !== undefined) {
+                //   this.state.descriptions.push(articles[i].description);
+                // }
+                // if (articles[i].url !== undefined) {
+                //   this.state.links.push(articles[i].url);
+                // }
+                // if (articles[i].urlToImage !== undefined) {
+                //   this.state.images.push(articles[i].urlToImage);
+                // }
               }
-              console.log(this.state.titles);
-              console.log(this.state.authors);
-              console.log(this.state.descriptions);
-              console.log(this.state.links);
-              console.log(this.state.images);
+              this.setState({
+                titles: toAdd
+              });
             }
           );
         }
         render() {
-          const { title } = this.state;
+          // const { title } = this.state;
+          console.log(this.state.titles);
+
           return (
             <div>
-              <h4>{title}</h4>
+              {" "}
+              <p>{this.state.titles[0]}</p>
             </div>
           );
         }
       }
-
-      // class App extends React.Component {
-      //   render() {
-      //     return (
-      //       <div>
-      //         <GetArticles />
-      //       </div>
-      //     );
-      //   }
-      // }
 
       ReactDOM.render(<GetArticles />, document.getElementById("root"));
     </script>
