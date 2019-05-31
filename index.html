@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Task Manager</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://unpkg.com/babel-standalone"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        padding: 50px;
+        background-color: #66ccff;
+        font-family: sans-serif;
+      }
+      #container {
+        display: flex;
+        justify-content: center;
+      }
+      input {
+        margin: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class GetArticles extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            titles: [],
+            authors: [],
+            descriptions: [],
+            links: [],
+            images: []
+          };
+        }
+
+        componentDidMount() {
+          $.get(
+            "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=7934a4fdec7d43b4b539fa21aa4592e3",
+            results => {
+              let articles = results.articles;
+              for (let i = 0; i <= articles.length - 1; i++) {
+                if (articles[i].title !== undefined) {
+                  this.state.titles.push(articles[i].title);
+                }
+                if (articles[i].author !== undefined) {
+                  this.state.authors.push(articles[i].author);
+                }
+                if (articles[i].description !== undefined) {
+                  this.state.descriptions.push(articles[i].description);
+                }
+                if (articles[i].url !== undefined) {
+                  this.state.links.push(articles[i].url);
+                }
+                if (articles[i].urlToImage !== undefined) {
+                  this.state.images.push(articles[i].urlToImage);
+                }
+              }
+              console.log(this.state.titles);
+              console.log(this.state.authors);
+              console.log(this.state.descriptions);
+              console.log(this.state.links);
+              console.log(this.state.images);
+            }
+          );
+        }
+        render() {
+          const { title } = this.state;
+          return (
+            <div>
+              <h4>{title}</h4>
+            </div>
+          );
+        }
+      }
+
+      // class App extends React.Component {
+      //   render() {
+      //     return (
+      //       <div>
+      //         <GetArticles />
+      //       </div>
+      //     );
+      //   }
+      // }
+
+      ReactDOM.render(<GetArticles />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
